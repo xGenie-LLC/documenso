@@ -1,7 +1,19 @@
 import fontkit from '@pdf-lib/fontkit';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import type { PDFFont } from 'pdf-lib';
+import { PDFDocument, rgb } from 'pdf-lib';
 
-import { CAVEAT_FONT_PATH } from '../../constants/pdf';
+import {
+  CAVEAT_FONT_PATH,
+  NOTO_SANS_CJK_SC_FONT_PATH,
+  NOTO_SANS_FONT_PATH,
+} from '../../constants/pdf';
+
+// Helper function to detect Chinese characters
+const containsChinese = (text: string): boolean => {
+  return /[\u4e00-\u9fff\u3400-\u4dbf\u{20000}-\u{2a6df}\u{2a700}-\u{2b73f}\u{2b740}-\u{2b81f}\u{2b820}-\u{2ceaf}\u{2ceb0}-\u{2ebef}\u{30000}-\u{3134f}]/u.test(
+    text,
+  );
+};
 
 export async function insertTextInPDF(
   pdfAsBase64: string,
@@ -12,15 +24,26 @@ export async function insertTextInPDF(
   useHandwritingFont = true,
   customFontSize?: number,
 ): Promise<string> {
-  // Fetch the font file from the public URL.
-  const fontResponse = await fetch(CAVEAT_FONT_PATH());
-  const fontCaveat = await fontResponse.arrayBuffer();
-
   const pdfDoc = await PDFDocument.load(pdfAsBase64);
-
   pdfDoc.registerFontkit(fontkit);
 
-  const font = await pdfDoc.embedFont(useHandwritingFont ? fontCaveat : StandardFonts.Helvetica);
+  let font: PDFFont;
+
+  if (useHandwritingFont) {
+    const fontResponse = await fetch(CAVEAT_FONT_PATH());
+    const fontCaveat = await fontResponse.arrayBuffer();
+    font = await pdfDoc.embedFont(fontCaveat);
+  } else if (containsChinese(text)) {
+    // Use CJK font for Chinese text
+    const fontResponse = await fetch(NOTO_SANS_CJK_SC_FONT_PATH());
+    const fontNotoCJK = await fontResponse.arrayBuffer();
+    font = await pdfDoc.embedFont(fontNotoCJK, { subset: true });
+  } else {
+    // Use standard font for non-Chinese text
+    const fontResponse = await fetch(NOTO_SANS_FONT_PATH());
+    const fontNoto = await fontResponse.arrayBuffer();
+    font = await pdfDoc.embedFont(fontNoto);
+  }
 
   const pages = pdfDoc.getPages();
   const pdfPage = pages[page];

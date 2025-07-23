@@ -7,3 +7,6 @@ export const MIN_STANDARD_FONT_SIZE = 8;
 export const MIN_HANDWRITING_FONT_SIZE = 20;
 
 export const CAVEAT_FONT_PATH = () => `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/caveat.ttf`;
+export const NOTO_SANS_FONT_PATH = () => `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`;
+export const NOTO_SANS_CJK_SC_FONT_PATH = () =>
+  `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans-cjk-sc.ttf`;
