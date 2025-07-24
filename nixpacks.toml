@@ -5,12 +5,13 @@ nixPkgs = ['nodejs_22', 'openssl']
 HUSKY = "0"
 NEXT_TELEMETRY_DISABLED = "1"
 
+[phases.install]
+cmds = ["npm ci --include=dev"]
+
 [phases.build]
 cmds = [
-  "npm install",
   "npm run prisma:generate",
-  "npm run build --filter=@documenso/remix...",
-  "ls -la apps/remix/build/server/"
+  "npm run build --filter=@documenso/remix..."
 ]
 
 [start]
