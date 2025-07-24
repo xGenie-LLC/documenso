@@ -12,9 +12,8 @@ cmds = ["npm ci --include=dev"]
 [phases.build]
 cmds = [
   "npm run prisma:generate",
-  "npm run prisma:migrate-deploy",
   "cd apps/remix && bash .bin/build.sh"
 ]
 
 [start]
-cmd = "cd apps/remix && NODE_ENV=production node build/server/main.js"
+cmd = "npx prisma migrate deploy --schema packages/prisma/schema.prisma && cd apps/remix && NODE_ENV=production node build/server/main.js"
