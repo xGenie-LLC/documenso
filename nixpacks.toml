@@ -12,6 +12,7 @@ cmds = ["npm ci --include=dev"]
 [phases.build]
 cmds = [
   "npm run prisma:generate",
+  "npm run prisma:migrate-deploy",
   "cd apps/remix && bash .bin/build.sh"
 ]
 
