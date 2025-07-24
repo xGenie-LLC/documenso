@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ['nodejs_22', 'openssl']
+
+[variables]
+HUSKY = "0"
+NEXT_TELEMETRY_DISABLED = "1"
+
+[phases.build]
+cmds = [
+  "npm install",
+  "npm run prisma:generate",
+  "npm run build --filter=@documenso/remix..."
+]
+
+[start]
+cmd = "cd apps/remix && npm start"
