@@ -3,7 +3,15 @@ import { TextAlignment, rgb, setFontAndSize } from '@cantoo/pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NOTO_SANS_CJK_SC_FONT_PATH } from '../../constants/pdf';
 import { getPageSize } from './get-page-size';
+
+// Helper function to detect Chinese characters
+const containsChinese = (text: string): boolean => {
+  return /[\u4e00-\u9fff\u3400-\u4dbf\u{20000}-\u{2a6df}\u{2a700}-\u{2b73f}\u{2b740}-\u{2b81f}\u{2b820}-\u{2ceaf}\u{2ceb0}-\u{2ebef}\u{30000}-\u{3134f}]/u.test(
+    text,
+  );
+};
 
 /**
  * Adds a rejection stamp to each page of a PDF document.
@@ -16,12 +24,18 @@ export async function addRejectionStampToPdf(
   const pages = pdfDoc.getPages();
   pdfDoc.registerFontkit(fontkit);
 
-  const fontBytes = await fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`).then(
-    async (res) => res.arrayBuffer(),
-  );
+  // Check if we need CJK font
+  const needsCJKFont = containsChinese(reason);
+
+  const fontUrl = needsCJKFont
+    ? NOTO_SANS_CJK_SC_FONT_PATH()
+    : `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`;
+
+  const fontBytes = await fetch(fontUrl).then(async (res) => res.arrayBuffer());
 
   const font = await pdfDoc.embedFont(fontBytes, {
     customName: 'Noto',
+    ...(needsCJKFont ? { subset: true } : {}),
   });
 
   const form = pdfDoc.getForm();

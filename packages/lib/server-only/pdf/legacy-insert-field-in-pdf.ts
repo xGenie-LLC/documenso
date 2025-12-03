@@ -16,6 +16,7 @@ import { isSignatureFieldType } from '@documenso/prisma/guards/is-signature-fiel
 import type { FieldWithSignature } from '@documenso/prisma/types/field-with-signature';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NOTO_SANS_CJK_SC_FONT_PATH } from '../../constants/pdf';
 import {
   ZCheckboxFieldMeta,
   ZDateFieldMeta,
@@ -28,11 +29,31 @@ import {
 } from '../../types/field-meta';
 import { getPageSize } from './get-page-size';
 
+// Helper function to detect Chinese characters
+const containsChinese = (text: string): boolean => {
+  return /[\u4e00-\u9fff\u3400-\u4dbf\u{20000}-\u{2a6df}\u{2a700}-\u{2b73f}\u{2b740}-\u{2b81f}\u{2b820}-\u{2ceaf}\u{2ceb0}-\u{2ebef}\u{30000}-\u{3134f}]/u.test(
+    text,
+  );
+};
+
 export const legacy_insertFieldInPDF = async (pdf: PDFDocument, field: FieldWithSignature) => {
-  const [fontCaveat, fontNoto] = await Promise.all([
+  // Determine if we need CJK font based on field content
+  const fieldContent = field.customText || field.signature?.typedSignature || '';
+  const needsCJKFont = containsChinese(fieldContent);
+
+  const fontPromises = [
     fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/fonts/caveat.ttf`).then(async (res) => res.arrayBuffer()),
     fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`).then(async (res) => res.arrayBuffer()),
-  ]);
+  ];
+
+  // Only load CJK font if needed to optimize performance
+  if (needsCJKFont) {
+    fontPromises.push(fetch(NOTO_SANS_CJK_SC_FONT_PATH()).then(async (res) => res.arrayBuffer()));
+  }
+
+  const fonts = await Promise.all(fontPromises);
+  const [fontCaveat, fontNoto] = fonts;
+  const fontNotoCJK = fonts[2]; // Will be undefined if not loaded
 
   const isSignatureField = isSignatureFieldType(field.type);
   const isDebugMode =
@@ -114,10 +135,19 @@ export const legacy_insertFieldInPDF = async (pdf: PDFDocument, field: FieldWith
     });
   }
 
-  const font = await pdf.embedFont(
-    isSignatureField ? fontCaveat : fontNoto,
-    isSignatureField ? { features: { calt: false } } : undefined,
-  );
+  // Select appropriate font based on content and field type
+  let fontToUse = fontNoto;
+  let embedOptions: { subset?: boolean; features?: { calt: boolean } } | undefined = undefined;
+
+  if (isSignatureField) {
+    fontToUse = fontCaveat;
+    embedOptions = { features: { calt: false } };
+  } else if (needsCJKFont && fontNotoCJK) {
+    fontToUse = fontNotoCJK;
+    embedOptions = { subset: true }; // Important for CJK fonts to reduce file size
+  }
+
+  const font = await pdf.embedFont(fontToUse, embedOptions);
 
   if (field.type === FieldType.SIGNATURE || field.type === FieldType.FREE_SIGNATURE) {
     await pdf.embedFont(fontCaveat);
