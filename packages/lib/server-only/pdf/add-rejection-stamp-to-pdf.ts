@@ -2,7 +2,7 @@ import type { PDFDocument } from '@cantoo/pdf-lib';
 import { TextAlignment, rgb, setFontAndSize } from '@cantoo/pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PRIVATE_INTERNAL_WEBAPP_URL } from '../../constants/app';
 import { NOTO_SANS_CJK_SC_FONT_PATH } from '../../constants/pdf';
 import { getPageSize } from './get-page-size';
 
@@ -29,7 +29,7 @@ export async function addRejectionStampToPdf(
 
   const fontUrl = needsCJKFont
     ? NOTO_SANS_CJK_SC_FONT_PATH()
-    : `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`;
+    : `${NEXT_PRIVATE_INTERNAL_WEBAPP_URL()}/fonts/noto-sans.ttf`;
 
   const fontBytes = await fetch(fontUrl).then(async (res) => res.arrayBuffer());
 

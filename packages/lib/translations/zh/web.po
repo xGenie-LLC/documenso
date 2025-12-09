@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: documenso-app\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 02:33\n"
+"PO-Revision-Date: 2025-11-27 05:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -82,7 +82,7 @@ msgstr "{0, plural, other {# 个文档}}"
 #. placeholder {0}: row.original.eventTriggers.length
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.webhooks._index.tsx
 msgid "{0, plural, one {# Event} other {# Events}}"
-msgstr "{0, plural, one {# 个事件} other {# 个事件}}"
+msgstr "{0, plural, other {# 个事件}}"
 
 #. placeholder {0}: assistantFields.filter((field) => field.recipientId === r.id).length
 #: apps/remix/app/components/general/envelope-signing/envelope-signer-form.tsx
@@ -1239,7 +1239,7 @@ msgstr "所有已插入的签名将被作废"
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/complete.tsx
 msgid "All recipients have signed. The document is being processed and you will receive an email copy shortly."
-msgstr "所有收件人已签署。文档正在处理中，您将很快收到电子邮件副本。"
+msgstr "所有收件人都已签署。文档正在处理中，您很快会收到一份通过电子邮件发送的副本。"
 
 #: apps/remix/app/components/dialogs/document-delete-dialog.tsx
 msgid "All recipients will be notified"
@@ -1685,7 +1685,7 @@ msgstr "您确定要拒签此文档吗？此操作无法撤销。"
 
 #: apps/remix/app/components/tables/settings-security-passkey-table-actions.tsx
 msgid "Are you sure you want to remove the <0>{passkeyName}</0> passkey?"
-msgstr "您确定要删除 <0>{passkeyName}</0> 通行密钥吗？"
+msgstr "您确定要移除 <0>{passkeyName}</0> 这把通行密钥吗？"
 
 #: apps/remix/app/components/dialogs/organisation-delete-dialog.tsx
 msgid "Are you sure you wish to delete this organisation?"
@@ -3777,11 +3777,11 @@ msgstr "不允许重复的值"
 
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx
 msgid "E.g. 0"
-msgstr "例如 0"
+msgstr "例如：0"
 
 #: packages/ui/primitives/document-flow/field-items-advanced-settings/number-field.tsx
 msgid "E.g. 100"
-msgstr "例如 100"
+msgstr "例如：100"
 
 #: apps/remix/app/components/general/document/document-page-view-button.tsx
 #: apps/remix/app/components/general/document/document-page-view-dropdown.tsx
@@ -3806,11 +3806,11 @@ msgstr "编辑 Webhook"
 #: apps/remix/app/components/dialogs/team-email-add-dialog.tsx
 #: apps/remix/app/components/dialogs/team-email-update-dialog.tsx
 msgid "eg. Legal"
-msgstr "例如 法务"
+msgstr "例如：Legal"
 
 #: apps/remix/app/components/dialogs/passkey-create-dialog.tsx
 msgid "eg. Mac"
-msgstr "例如 Mac"
+msgstr "例如：Mac"
 
 #: apps/remix/app/routes/_unauthenticated+/articles.signature-disclosure.tsx
 msgid "Electronic Delivery of Documents"
@@ -4256,7 +4256,7 @@ msgstr "所有人都已签署"
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/complete.tsx
 msgid "Everyone has signed! You will receive an email copy of the signed document."
-msgstr "所有人已签署！您将收到已签署文档的电子邮件副本。"
+msgstr "所有人都已签署！您将收到一份已签署文档的电子邮件副本。"
 
 #: apps/remix/app/components/dialogs/passkey-create-dialog.tsx
 msgid "Exceeded timeout"
@@ -5208,7 +5208,7 @@ msgstr "链接已生成"
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings.webhooks._index.tsx
 msgid "Listening to"
-msgstr "监听"
+msgstr "监听对象"
 
 #: apps/remix/app/components/general/document/document-page-view-recent-activity.tsx
 msgid "Load older activity"
@@ -5292,7 +5292,7 @@ msgstr "管理计费"
 
 #: apps/remix/app/routes/_authenticated+/settings+/billing.tsx
 msgid "Manage billing and subscriptions for organisations where you have billing management permissions."
-msgstr "管理您拥有账单管理权限的组织的账单和订阅。"
+msgstr "为您拥有账单管理权限的组织管理计费和订阅。"
 
 #: apps/remix/app/components/dialogs/public-profile-template-manage-dialog.tsx
 msgid "Manage details for this public template"
@@ -5310,6 +5310,7 @@ msgstr "管理文档"
 msgid "Manage linked accounts"
 msgstr "管理关联账户"
 
+#: apps/remix/app/routes/_authenticated+/admin+/organisation-insights.$id.tsx
 #: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
 msgid "Manage organisation"
 msgstr "管理组织"
@@ -7206,7 +7207,7 @@ msgstr "请选择套餐以继续"
 
 #: apps/remix/app/components/general/envelope-editor/envelope-editor-fields-page-renderer.tsx
 msgid "Select a recipient"
-msgstr "选择收件人"
+msgstr "选择一个收件人"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl._index.tsx
 msgid "Select a team to view its dashboard"
@@ -7230,7 +7231,7 @@ msgstr "选择访问方式"
 
 #: apps/remix/app/components/dialogs/webhook-test-dialog.tsx
 msgid "Select an event type"
-msgstr "选择事件类型"
+msgstr "选择一个事件类型"
 
 #: apps/remix/app/components/dialogs/sign-field-dropdown-dialog.tsx
 #: packages/ui/primitives/combobox.tsx
@@ -7336,7 +7337,7 @@ msgstr "选择触发器"
 
 #: packages/ui/primitives/multi-select-combobox.tsx
 msgid "Select values..."
-msgstr "选择值..."
+msgstr "选择值…"
 
 #: apps/remix/app/components/forms/editor/editor-field-generic-field-forms.tsx
 msgid "Select vertical align"
@@ -9262,7 +9263,7 @@ msgstr "类型"
 #: packages/ui/primitives/signature-pad/signature-pad.tsx
 msgctxt "Type signature"
 msgid "Type"
-msgstr "类型"
+msgstr "键入"
 
 #: apps/remix/app/components/general/app-command-menu.tsx
 msgid "Type a command or search..."
@@ -9883,6 +9884,10 @@ msgstr "查看文档以签署"
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/settings._index.tsx
 msgid "View documents associated with this email"
 msgstr "查看与此邮箱相关的文档"
+
+#: apps/remix/app/routes/_authenticated+/admin+/organisations.$id.tsx
+msgid "View insights"
+msgstr "查看洞察"
 
 #: apps/remix/app/components/general/organisations/organisation-invitations.tsx
 msgid "View invites"
@@ -10707,7 +10712,7 @@ msgstr "您没有权限为此团队创建令牌"
 
 #: apps/remix/app/components/tables/user-billing-organisations-table.tsx
 msgid "You don't manage billing for any organisations."
-msgstr "您没有任何组织的账单管理权限。"
+msgstr "您目前未为任何组织管理计费。"
 
 #: packages/email/template-components/template-document-cancel.tsx
 msgid "You don't need to sign it anymore."
@@ -10926,7 +10931,7 @@ msgstr "今后登录时，你需要输入验证器应用中的验证码。"
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/complete.tsx
 msgid "You will receive an email copy of the signed document once everyone has signed."
-msgstr "所有人签署后，您将收到已签署文档的电子邮件副本。"
+msgstr "当所有人签署完成后，您将收到一份已签署文档的电子邮件副本。"
 
 #: apps/remix/app/routes/_unauthenticated+/organisation.sso.confirmation.$token.tsx
 msgid "Your Account"
@@ -11203,3 +11208,4 @@ msgstr "您的验证码："
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "your-domain.com another-domain.com"
 msgstr "your-domain.com another-domain.com"
+

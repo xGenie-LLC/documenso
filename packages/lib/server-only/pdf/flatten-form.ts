@@ -14,7 +14,7 @@ import {
 } from '@cantoo/pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 
-import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
+import { NEXT_PRIVATE_INTERNAL_WEBAPP_URL } from '../../constants/app';
 import { NOTO_SANS_CJK_SC_FONT_PATH } from '../../constants/pdf';
 
 export const removeOptionalContentGroups = (document: PDFDocument) => {
@@ -73,7 +73,7 @@ export const flattenForm = async (document: PDFDocument) => {
     );
     font = await document.embedFont(fontCJK, { subset: true });
   } else {
-    const fontNoto = await fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`).then(
+    const fontNoto = await fetch(`${NEXT_PRIVATE_INTERNAL_WEBAPP_URL()}/fonts/noto-sans.ttf`).then(
       async (res) => res.arrayBuffer(),
     );
     font = await document.embedFont(fontNoto);
