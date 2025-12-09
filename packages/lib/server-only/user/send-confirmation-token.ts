@@ -23,11 +23,15 @@ export const sendConfirmationToken = async ({
   });
 
   if (!user) {
-    throw new Error('User not found');
+    // Don't throw error - just return silently to prevent job retries
+    // and avoid revealing whether email exists in system
+    console.log(`[sendConfirmationToken] User not found for email: ${email}`);
+    return { success: false, reason: 'user_not_found' };
   }
 
   if (user.emailVerified) {
-    throw new Error('Email verified');
+    // Don't throw error - email is already verified, just return
+    return { success: false, reason: 'email_already_verified' };
   }
 
   const mostRecentToken = await getMostRecentEmailVerificationToken({ userId: user.id });
