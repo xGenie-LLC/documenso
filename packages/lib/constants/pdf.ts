@@ -11,3 +11,8 @@ export const CAVEAT_FONT_PATH = () => `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/caveat.
 export const NOTO_SANS_FONT_PATH = () => `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans.ttf`;
 export const NOTO_SANS_CJK_SC_FONT_PATH = () =>
   `${NEXT_PUBLIC_WEBAPP_URL()}/fonts/noto-sans-cjk-sc.ttf`;
+
+export const PDF_SIZE_A4_72PPI = {
+  width: 595,
+  height: 842,
+};
